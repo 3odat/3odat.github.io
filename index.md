@@ -1,4 +1,3 @@
-# Ibrahim Odat
 
 **PhD Student in Robotics and Autonomous UAV Systems**  
 Department of [Your Department], [Your University]  
