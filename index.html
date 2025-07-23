@@ -1,101 +1,473 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ibrahim Odat – Cybersecurity & UAV Research</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Ibrahim Odat – Cybersecurity • AI • Autonomous UAV Systems</title>
+  <meta name="description" content="Ibrahim Odat – PhD researcher bridging cybersecurity, AI/LLMs, and autonomous UAV systems. Multi‑agent drones, LangGraph control, PX4 security, penetration testing, and AI‑driven threat detection."/>
+  <meta name="author" content="Ibrahim Odat"/>
+  <link rel="icon" href="assets/favicon.png"/>
   <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      margin: 2rem auto;
-      max-width: 850px;
-      padding: 1rem;
-      line-height: 1.7;
-      color: #222;
+    :root {
+      --max-w: 1200px;
+      --brand: #005bbb;          /* deep tech blue */
+      --brand-accent: #ff006e;   /* punchy magenta accent */
+      --bg: #ffffff;
+      --bg-alt: #f7f9fc;
+      --text: #1a1a1a;
+      --text-light: #555;
+      --card-bg: #ffffff;
+      --card-border: #e0e0e0;
+      --radius: 10px;
+      --shadow: 0 2px 8px rgba(0,0,0,.07);
     }
-    h1, h2 {
-      color: #003366;
+    [data-theme="dark"] {
+      --bg: #0f1115;
+      --bg-alt: #181a20;
+      --text: #e5e5e5;
+      --text-light: #bbb;
+      --card-bg: #1c1f26;
+      --card-border: #2c2f36;
+      --shadow: 0 2px 8px rgba(0,0,0,.6);
+      --brand: #4dabff;
+      --brand-accent: #ff4da6;
     }
-    ul {
-      padding-left: 1.2em;
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;}
+    img{max-width:100%;height:auto;}
+    a{color:var(--brand);text-decoration:none;}a:hover{text-decoration:underline;}
+    h1,h2,h3,h4{line-height:1.25;color:var(--brand);}h1{margin-top:0;font-size:2.5rem;}h2{margin-top:3rem;font-size:1.8rem;}h3{margin-top:2rem;font-size:1.25rem;}
+    p{margin:0 0 1rem 0;}
+    .container{max-width:var(--max-w);margin:0 auto;padding:0 1.25rem;}
+
+    /* ── Nav ───────────────────────────────── */
+    header{position:sticky;top:0;width:100%;background:var(--bg-alt);z-index:1000;border-bottom:1px solid var(--card-border);box-shadow:var(--shadow);} 
+    .nav-bar{display:flex;align-items:center;justify-content:space-between;height:64px;}
+    .nav-brand{font-weight:700;font-size:1.25rem;color:var(--brand);} 
+    nav ul{display:flex;gap:1.5rem;list-style:none;margin:0;padding:0;font-size:.95rem;}
+    nav li{margin:0;padding:0;} 
+    nav a{color:var(--text);font-weight:600;}nav a:hover{color:var(--brand);} 
+    .nav-toggle{display:none;background:none;border:none;font-size:1.5rem;}
+
+    @media (max-width:700px){
+      nav ul{display:none;flex-direction:column;position:absolute;top:64px;right:0;background:var(--bg-alt);padding:1rem 2rem;box-shadow:var(--shadow);}
+      nav ul.open{display:flex;}
+      .nav-toggle{display:block;color:var(--brand);}
     }
-    .contact, .links {
-      margin-top: 1rem;
-    }
-    .section {
-      margin-bottom: 2.5rem;
-    }
-    a {
-      color: #0066cc;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    hr {
-      margin: 2rem 0;
-      border: 0;
-      height: 1px;
-      background: #eee;
-    }
+
+    /* ── Hero ─────────────────────────────── */
+    .hero{padding:4rem 0 2rem 0;text-align:center;}
+    .hero-img{width:180px;height:180px;border-radius:50%;object-fit:cover;border:4px solid var(--brand);} 
+    .hero-buttons{margin-top:1.5rem;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+    .btn{display:inline-block;padding:.65rem 1.25rem;border-radius:var(--radius);border:2px solid var(--brand);font-weight:600;transition:.15s;}
+    .btn-primary{background:var(--brand);color:#fff;border-color:var(--brand);} .btn-primary:hover{background:var(--brand-accent);border-color:var(--brand-accent);} 
+    .btn-outline{color:var(--brand);} .btn-outline:hover{color:#fff;background:var(--brand);}
+
+    /* ── Section Layout Utilities ───────────────── */
+    .section{padding:2rem 0;} 
+    .section.alt{background:var(--bg-alt);} 
+
+    /* two-column responsive */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;} 
+    @media(max-width:800px){.two-col{grid-template-columns:1fr;}}
+
+    /* cards grid */
+    .grid{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));}
+    .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:1.25rem;box-shadow:var(--shadow);}
+    .card h3{margin-top:0;}
+    .card-tags{margin-top:.5rem;font-size:.85rem;color:var(--text-light);} 
+
+    /* experience timeline */
+    .timeline{position:relative;margin:2rem 0;padding-left:2rem;border-left:3px solid var(--brand);} 
+    .tl-item{margin-bottom:2rem;position:relative;} 
+    .tl-item:before{content:"";position:absolute;left:-10px;top:5px;width:16px;height:16px;border-radius:50%;background:var(--brand);}
+    .tl-title{font-weight:700;}
+    .tl-org{color:var(--text-light);} 
+
+    /* skills table */
+    .skills-table{width:100%;border-collapse:collapse;margin-top:1rem;font-size:.95rem;}
+    .skills-table th,.skills-table td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--card-border);} 
+    .skills-table th{background:var(--bg-alt);}
+
+    /* footer */
+    footer{margin-top:4rem;padding:3rem 0;text-align:center;font-size:.9rem;color:var(--text-light);background:var(--bg-alt);border-top:1px solid var(--card-border);} 
+
+    /* figure styles */
+    figure{margin:0 0 1.5rem 0;text-align:center;}
+    figcaption{font-size:.85rem;color:var(--text-light);margin-top:.25rem;}
+
+    /* dark mode button */
+    .theme-switch{position:fixed;bottom:1rem;right:1rem;z-index:2000;background:var(--brand);color:#fff;border:none;padding:.5rem .75rem;border-radius:var(--radius);font-size:.9rem;cursor:pointer;box-shadow:var(--shadow);} 
   </style>
 </head>
 <body>
-
-  <h1>Ibrahim Odat</h1>
-  <p><strong>PhD Student – Cybersecurity & Autonomous UAV Systems</strong><br>
-  Oakland University, Michigan, USA<br>
-  <a href="mailto:ibrahimodatt@gmail.com">ibrahimodatt@gmail.com</a> · <a href="https://github.com/3odat">GitHub</a> · <a href="https://www.linkedin.com/in/ibrahim-odat">LinkedIn</a></p>
-
-  <hr />
-
-  <div class="section">
-    <h2>About Me</h2>
-    <p>
-      I am an innovative cybersecurity researcher with over 3 years of hands-on experience in offensive security, AI-driven threat detection, and autonomous system protection. Currently pursuing my PhD, I specialize in integrating large language models and intelligent reasoning into drone platforms and robotic systems. My goal is to secure autonomous systems through advanced AI and real-time collaboration frameworks.
-    </p>
+<button class="theme-switch" id="themeSwitch" aria-label="Toggle dark mode">🌙 Dark</button>
+<header>
+  <div class="container nav-bar">
+    <a class="nav-brand" href="#top">Ibrahim Odat</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+    <nav>
+      <ul id="navMenu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#ai-llm">AI/LLM</a></li>
+        <li><a href="#uav">UAV Systems</a></li>
+        <li><a href="#security">Cybersecurity</a></li>
+        <li><a href="#publications">Research</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#certs">Certifications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
   </div>
+</header>
 
-  <div class="section">
-    <h2>Technical Skills</h2>
-    <ul>
-      <li><strong>Cybersecurity:</strong> Penetration Testing, MITRE ATT&CK, OWASP, NIST, EDR, SIEM</li>
-      <li><strong>AI & LLMs:</strong> Fine-Tuning, Prompt Engineering, Ollama, LangGraph</li>
-      <li><strong>Drone Systems:</strong> PX4, MAVSDK, ROS2, Gazebo, YOLOv8</li>
-      <li><strong>Languages:</strong> Python, Bash, SQL, PHP</li>
-      <li><strong>Cloud & IAM:</strong> AWS, Active Directory, MFA, Zero Trust</li>
-    </ul>
+<main id="top">
+  <!-- ───────────────────── Hero ───────────────────── -->
+  <section class="hero container">
+    <img src="assets/ibrahim-headshot.jpg" alt="Portrait of Ibrahim Odat" class="hero-img"/>
+    <h1>Ibrahim Odat</h1>
+    <p><strong>PhD Student · Cybersecurity & Autonomous UAV Systems</strong></p>
+    <p>I build secure, intelligent, multi‑agent drone systems that combine <strong>AI/LLMs, PX4 flight control, real‑time vision</strong>, and <strong>offensive security research</strong>.</p>
+    <div class="hero-buttons">
+      <a class="btn btn-primary" href="Odat_resume__2_.pdf" target="_blank">📄 Download CV</a>
+      <a class="btn btn-outline" href="#projects">View Projects</a>
+      <a class="btn btn-outline" href="https://github.com/3odat" target="_blank">GitHub</a>
+      <a class="btn btn-outline" href="https://www.linkedin.com/in/ibrahim-odat" target="_blank">LinkedIn</a>
+    </div>
+  </section>
+
+  <!-- ───────────────────── About ───────────────────── -->
+  <section id="about" class="section alt">
+    <div class="container two-col">
+      <div>
+        <h2>About Me</h2>
+        <p>I am an innovative cybersecurity professional and PhD researcher working at the intersection of <strong>AI, security, and autonomous robotics</strong>. My current work focuses on securing UAV ecosystems end‑to‑end: from PX4 autopilot layers and MAVLink communications to AI‑assisted mission planning and multi‑agent collaboration using <strong>LangGraph</strong> and large language models.</p>
+        <p>I lead hands‑on research that combines <em>offensive security testing</em> (penetration testing, protocol fuzzing, IoT exploit development) with <em>defensive AI</em> (LLM‑powered anomaly detection, autonomous response agents). I’ve demonstrated real exploits on PX4 and Foscam IoT devices and am building open research platforms to help industry harden next‑gen autonomous systems.</p>
+        <p><strong>Current PhD Research:</strong> Securing autonomous systems through AI‑assisted reasoning, adaptive threat detection, and resilient multi‑agent control architectures.</p>
+      </div>
+      <div>
+        <figure>
+          <img src="assets/lab-drones.jpg" alt="Two research quadrotors on lab bench"/>
+          <figcaption>Experimental PX4 testbed with multi‑agent mission control.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/uav-field.jpg" alt="Drone field deployment"/>
+          <figcaption>Outdoor flight tests: collaborative search & object counting.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── Projects ───────────────────── -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2>Featured Projects</h2>
+      <p>Selected technical and research efforts where I served as <strong>lead developer, security analyst, or research PI</strong>.</p>
+      <div class="grid">
+        <article class="card">
+          <h3>LangGraph‑Driven PX4 Single‑Agent Control</h3>
+          <p>Built an autonomous control agent that accepts natural‑language mission prompts, reasons via ReAct, and issues MAVSDK commands (connect, arm, takeoff, land, detect objects) to a PX4‑based drone. Integrates telemetry guards and safety checks.</p>
+          <p class="card-tags">LangGraph · MAVSDK · PX4 · Python · ReAct</p>
+        </article>
+        <article class="card">
+          <h3>Multi‑Agent UAV Collaboration (2‑Drone AI Chat Ops)</h3>
+          <p>Architected two LLM‑backed agents (Drone‑1 Supervisor & Drone‑2 Specialist) that communicate over WebSockets, negotiate task division, and exchange sensor‑derived results (e.g., count people vs. count cars). Demonstrates distributed autonomy.</p>
+          <p class="card-tags">Multi‑Agent · LangGraph · LLM Tool Calling · FastAPI · ReAct</p>
+        </article>
+        <article class="card">
+          <h3>PX4 Autopilot Session Hijacking Exploit</h3>
+          <p>Performed offensive security research against PX4/MAVLink control channels. Demonstrated session hijack → privilege escalation → flight command injection. Produced mitigations and monitoring signatures; improved system resilience ~80% in lab testing.</p>
+          <p class="card-tags">PenTest · MAVLink · Exploit Dev · UAV Security</p>
+        </article>
+        <article class="card">
+          <h3>Foscam IoT Camera Security Showcase</h3>
+          <p>Discovered authentication bypass + firmware exposure paths in consumer Foscam devices. Live demo (Black Hat Arsenal style) showing pivot to network reconnaissance. Findings informed updated encryption and patch guidance.</p>
+          <p class="card-tags">IoT · Firmware Analysis · Exploit Demo</p>
+        </article>
+        <article class="card">
+          <h3>Net‑GPT: LLM MITM Chatbot for UAV Security</h3>
+          <p>Graduate thesis project: network‑in‑the‑middle LLM agent that parses telemetry & control traffic, flags anomalies, and can converse with operators in natural language while auto‑generating detection rules.</p>
+          <p class="card-tags">LLM Security · MITM · Detection Engineering</p>
+        </article>
+        <article class="card">
+          <h3>YOLOv8 Vision‑in‑the‑Loop Object Counting</h3>
+          <p>Integrated onboard / edge YOLOv8 for aerial object detection (vehicles, people) feeding back to mission planner for dynamic re‑tasking and agent‑to‑agent result sharing.</p>
+          <p class="card-tags">YOLOv8 · Computer Vision · Edge AI · UAV Perception</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── AI & LLM ───────────────────── -->
+  <section id="ai-llm" class="section alt">
+    <div class="container two-col">
+      <div>
+        <h2>AI / LLM Engineering</h2>
+        <p>I apply large language models as <strong>reasoners, controllers, and security analysts</strong> inside robotic and cyber environments. My work spans prompt engineering and <strong>tool‑augmented ReAct agents</strong> to <strong>fine‑tuned and distilled local models</strong> for constrained edge deployments.</p>
+        <h3>Selected Capabilities</h3>
+        <ul>
+          <li>Knowledge distillation: compressing foundation models for onboard inference.</li>
+          <li>Fine‑tuning domain models for UAV command interpretation & anomaly descriptions.</li>
+          <li>LLM tool binding to MAVSDK, telemetry feeds, and object detection APIs.</li>
+          <li>Ollama deployments for offline / field robotics use.</li>
+          <li>ReAct + LangGraph mission planners with safety stop conditions.</li>
+        </ul>
+      </div>
+      <div>
+        <figure>
+          <img src="assets/llm-agent-graph.png" alt="Diagram of LLM-driven LangGraph mission planner"/>
+          <figcaption>LangGraph mission planner binding tools → PX4 control + vision.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/model-distillation.jpg" alt="Model distillation process diagram"/>
+          <figcaption>Distilling large models to edge‑friendly UAV inference stacks.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── UAV Systems ───────────────────── -->
+  <section id="uav" class="section">
+    <div class="container two-col">
+      <div>
+        <h2>Autonomous UAV Systems</h2>
+        <p>I design and secure full‑stack UAV research platforms: PX4 autopilot, MAVSDK control APIs, ROS2/Gazebo simulation pipelines, and AI/vision feedback loops. My focus is making drones <strong>collaborative, explainable, and secure</strong>.</p>
+        <h3>What I Build</h3>
+        <ul>
+          <li>LangGraph control agents that map natural language to safe flight actions.</li>
+          <li>Multi‑agent coordination (Drone 1 ↔ Drone 2) via FastAPI + WebSockets.</li>
+          <li>Vision‑in‑loop missions: detect → classify → re‑task drones.</li>
+          <li>Safety wrappers: altitude thresholds, arming guards, heartbeat checks.</li>
+          <li>Simulation‑to‑field transfer testing (Gazebo → hardware).</li>
+        </ul>
+      </div>
+      <div>
+        <figure>
+          <img src="assets/multi-drone-comm.png" alt="Two drones exchanging task data"/>
+          <figcaption>Bidirectional message bus for UAV task negotiation.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/px4-mavsdk.jpg" alt="PX4 + MAVSDK integration screenshot"/>
+          <figcaption>PX4 SITL + MAVSDK teleop pipeline used for agent testing.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── Cybersecurity ───────────────────── -->
+  <section id="security" class="section alt">
+    <div class="container">
+      <h2>Cybersecurity & Offensive Research</h2>
+      <p>I started in offensive security — penetration testing, vulnerability assessment, exploit development — and now apply that mindset to <strong>autonomous and IoT systems</strong>. I routinely move between red‑team style testing and building AI‑assisted defenses.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>UAV / PX4 Security Testing</h3>
+          <ul>
+            <li>MAVLink intercept & session hijack replay</li>
+            <li>Protocol fuzzing & buffer overflow discovery</li>
+            <li>Telemetry tamper + false command injection</li>
+            <li>Hardening recommendations adopted in lab fleet (↑ resilience ~80%)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>IoT Exploit & Firmware Analysis (Foscam)</h3>
+          <ul>
+            <li>Auth bypass → camera control takeover</li>
+            <li>Reverse‑engineered firmware update chain</li>
+            <li>Live exploitation showcase; informed vendor security guidance</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>LLM‑Assisted Threat Detection</h3>
+          <ul>
+            <li>Natural‑language alert triage bot</li>
+            <li>LLM summarization of SIEM event clusters</li>
+            <li>Adaptive signatures from model‑seen anomalies</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── Publications ───────────────────── -->
+  <section id="publications" class="section">
+    <div class="container">
+      <h2>Research & Publications</h2>
+      <p>Formal works, theses, and manuscripts in progress.</p>
+
+      <h3>Thesis</h3>
+      <ul>
+        <li><strong>Odat, I.</strong> <em>Net‑GPT: LLM‑Empowered MITM Chatbot for UAV Security.</em> M.S. Thesis, Oakland University, 2023. <a href="docs/net-gpt-thesis.pdf" target="_blank">PDF</a></li>
+      </ul>
+
+      <h3>In Progress / Drafts</h3>
+      <ul>
+        <li><strong>Securing PX4 Autopilot via AI‑Assisted Anomaly Detection</strong> – draft manuscript (target: IEEE TPS or ACSAC workshop).</li>
+        <li><strong>Collaborative LLM Agents for Multi‑Drone Task Negotiation</strong> – working paper; field data being collected.</li>
+      </ul>
+
+      <h3>Posters & Talks</h3>
+      <ul>
+        <li>Foscam IoT Exploit Demonstration (Black Hat Arsenal showcase style lab event).</li>
+        <li>Multi‑Agent Drone Mission Control with LangGraph – University Research Day.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ───────────────────── Experience ───────────────────── -->
+  <section id="experience" class="section alt">
+    <div class="container">
+      <h2>Experience</h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-title">Cybersecurity Researcher</div>
+          <div class="tl-org">Oakland University – Rochester, MI · Jan 2022 – Present</div>
+          <ul>
+            <li>Led PX4 penetration campaign: discovered buffer overflows, session hijack paths; drove 80% resilience improvement in controlled testing.</li>
+            <li>Integrated LLM fine‑tuning & prompt pipelines for proactive threat detection in UAV telemetry.</li>
+            <li>Developed LangGraph‑based autonomous control & security monitoring stack for research drones.</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-title">Cybersecurity Specialist</div>
+          <div class="tl-org">ZADD Translate – Remote · Jan 2021 – Jan 2022</div>
+          <ul>
+            <li>Deployed domain segmentation & TsPlus isolation to reduce lateral movement exposure.</li>
+            <li>Integrated AI models into alerting pipeline → reduced false positives by ~35%.</li>
+            <li>Ran 120+ Nessus scans; maintained NIST 800‑171 compliance posture.</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-title">Penetration Tester</div>
+          <div class="tl-org">Future Tec Security Solutions – Detroit, MI · Jan 2020 – Jan 2021</div>
+          <ul>
+            <li>Executed 200+ web & infra penetration tests (Burp Suite, SQLMap, custom tooling) cutting engagement cycle time 40%.</li>
+            <li>Eliminated critical OWASP Top 10 findings across multiple client estates.</li>
+            <li>Wrote internal scripts for repeatable exploit/validation workflows.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── Skills ───────────────────── -->
+  <section id="skills" class="section">
+    <div class="container">
+      <h2>Technical Skills</h2>
+      <table class="skills-table">
+        <thead>
+          <tr><th>Domain</th><th>Skills / Tools</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cybersecurity</td>
+            <td>Penetration Testing, Vulnerability Assessment, MITRE ATT&CK, OWASP, NIST, EDR, SIEM</td>
+          </tr>
+          <tr>
+            <td>AI & LLM</td>
+            <td>Knowledge Distillation, Fine‑Tuning, Prompt Engineering, Ollama, LangGraph Agents</td>
+          </tr>
+          <tr>
+            <td>UAV / Robotics</td>
+            <td>PX4 Autopilot, MAVSDK, ROS2, Gazebo, Mission Planning, Safety Guards</td>
+          </tr>
+          <tr>
+            <td>Vision</td>
+            <td>YOLOv8, Object Detection, Edge Inference, Real‑time Video Pipelines</td>
+          </tr>
+          <tr>
+            <td>Programming</td>
+            <td>Python, Bash, SQL, REST APIs, Flask, FastAPI, Docker</td>
+          </tr>
+          <tr>
+            <td>Cloud / IAM</td>
+            <td>AWS Security, Active Directory, Okta, MFA, Zero Trust</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ───────────────────── Certifications ───────────────────── -->
+  <section id="certs" class="section alt">
+    <div class="container">
+      <h2>Certifications</h2>
+      <div class="grid">
+        <div class="card"><h3>CEH</h3><p>Certified Ethical Hacker – EC‑Council (2023)</p></div>
+        <div class="card"><h3>eJPT</h3><p>eLearnSecurity Junior Penetration Tester – INE (2022)</p></div>
+        <div class="card"><h3>Fortinet NSE 1 & 2</h3><p>Network Security Expert – Fortinet (2021)</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────── CV + Contact ───────────────────── -->
+  <section id="contact" class="section">
+    <div class="container two-col">
+      <div>
+        <h2>Contact</h2>
+        <p>I’m open to research collaborations, industry partnerships, internships, and advanced security consulting for autonomous systems.</p>
+        <p>Email: <a href="mailto:ibrahimodatt@gmail.com">ibrahimodatt@gmail.com</a></p>
+        <p>Location: Michigan, USA</p>
+        <p>
+          <a class="btn btn-primary" href="Odat_resume__2_.pdf" target="_blank">📄 Download Full CV</a>
+        </p>
+      </div>
+      <div>
+        <h3>Connect</h3>
+        <ul>
+          <li><a href="https://github.com/3odat" target="_blank">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/ibrahim-odat" target="_blank">LinkedIn</a></li>
+          <li><a href="#publications">Research / Publications</a></li>
+        </ul>
+        <h3>Quick Message (Formspree Example)</h3>
+        <form action="https://formspree.io/f/your-form-id" method="POST">
+          <label>Name<br><input type="text" name="name" required></label><br><br>
+          <label>Email<br><input type="email" name="email" required></label><br><br>
+          <label>Message<br><textarea name="message" rows="4" required></textarea></label><br><br>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+        <p style="font-size:.8rem;color:var(--text-light);margin-top:.5rem;">Replace the form action URL with your own Formspree / Netlify form endpoint.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    © <span id="year"></span> Ibrahim Odat. All rights reserved. · Built with HTML/CSS · Hosted on GitHub Pages.
   </div>
+</footer>
 
-  <div class="section">
-    <h2>Projects</h2>
-    <ul>
-      <li><strong>PX4 Autopilot Session Hijacking</strong> – Demonstrated privilege escalation via session hijacking on UAV systems.</li>
-      <li><strong>Foscam IoT Camera Exploits</strong> – Presented live bypass techniques at Black Hat Arsenal; contributed to new firmware security standards.</li>
-    </ul>
-  </div>
+<script>
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  <div class="section">
-    <h2>Publications & Research</h2>
-    <ul>
-      <li><strong>Net-GPT:</strong> LLM-Empowered MITM Chatbot for UAV Security (Master’s Thesis)</li>
-      <li><strong>PhD Focus:</strong> Securing Autonomous Systems using AI-Powered Agents (Expected 2028)</li>
-    </ul>
-  </div>
+  // mobile nav toggle
+  document.getElementById('navToggle').addEventListener('click', function(){
+    document.getElementById('navMenu').classList.toggle('open');
+  });
 
-  <div class="section">
-    <h2>Certifications</h2>
-    <ul>
-      <li>Certified Ethical Hacker (CEH) – EC-Council, 2023</li>
-      <li>eJPT – eLearnSecurity, 2022</li>
-      <li>Fortinet NSE 1 & 2 – 2021</li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>Resume</h2>
-    <p>📄 <a href="Odat_resume__2_.pdf" target="_blank">View My Full Resume (PDF)</a></p>
-  </div>
-
+  // theme switch
+  const themeBtn = document.getElementById('themeSwitch');
+  function setTheme(mode){
+    if(mode==='dark'){
+      document.documentElement.setAttribute('data-theme','dark');
+      localStorage.setItem('theme','dark');
+      themeBtn.textContent='☀️ Light';
+    }else{
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme','light');
+      themeBtn.textContent='🌙 Dark';
+    }
+  }
+  themeBtn.addEventListener('click',()=>{
+    const current = localStorage.getItem('theme')==='dark'?'light':'dark';
+    setTheme(current);
+  });
+  // init theme from storage
+  setTheme(localStorage.getItem('theme')||'light');
+</script>
 </body>
 </html>
