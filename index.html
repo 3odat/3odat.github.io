@@ -84,18 +84,53 @@
     .card h3{margin-top:0;}
     .card-tags{margin-top:.5rem;font-size:.85rem;color:var(--text-light);} 
 
-    /* experience timeline */
-    .timeline li::before {
-  content: "🔵";
-  position: absolute;
-  left: 1.5;
-  top: 0.2rem;
+    /* ───── Experience Timeline ───── */
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  position: relative;
+  border-left: 3px solid var(--brand);   /* vertical line */
+  padding-left: 1.5rem;
 }
-   
-    .tl-item{margin-bottom:2rem;position:relative;} 
-    .tl-item:before{content:"";position:absolute;left:-10px;top:5px;width:16px;height:16px;border-radius:50%;background:var(--brand);}
-    .tl-title{font-weight:700;}
-    .tl-org{color:var(--text-light);} 
+
+.timeline li {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+}
+
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -0.95rem;
+  top: 0.2rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--brand);
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px var(--brand);
+}
+
+.tl-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.tl-org {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.tl-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 0.25rem;
+}
+
 
     /* skills table */
     .skills-table{width:100%;border-collapse:collapse;margin-top:1rem;font-size:.95rem;}
