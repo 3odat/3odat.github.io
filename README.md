@@ -12,8 +12,9 @@ Light and dark themes follow the system setting, with a manual toggle.
 
 ```
 index.html            all content
+cv.html               the CV as a web page, and the source of the PDF
 assets/style.css      design tokens, layout, components
-assets/script.js      theme toggle, nav, Fig. 1, BibTeX copy, lightbox
+assets/script.js      theme toggle, nav, the interactive figures, BibTeX copy, lightbox
 assets/img/           photos (WebP with JPEG fallback) and og.jpg
 assets/fonts/         self-hosted variable fonts
 assets/Ibrahim_Odat_CV.pdf
@@ -27,7 +28,10 @@ Everything lives in `index.html`. Search for `UPDATE:` to find the spots that ch
   list, and edit the fields. The status tag is `review`, `preprint`, or `conf`.
 - **News**: add an `<li>` at the top of the `news` list.
 - **Citation numbers**: the `metrics` block in the hero, and the "Cited by" spans in Publications.
-- **CV**: replace `assets/Ibrahim_Odat_CV.pdf`, keeping the file name.
+- **CV**: edit `cv.html`, open it in a browser, and use Print, then Save as PDF (Letter, default margins off)
+  to replace `assets/Ibrahim_Odat_CV.pdf`. Keep the file name.
+- **Figures**: Fig. 1 text lives at the top of the Fig. 1 block in `assets/script.js`. The Fig. 2 scenarios
+  are `data-*` attributes on the buttons in `index.html`. Fig. 3 and Fig. 4 are plain markup.
 
 ## Local preview
 
