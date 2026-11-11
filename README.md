@@ -24,6 +24,9 @@ assets/Ibrahim_Odat_CV.pdf
 
 Everything lives in `index.html`. Search for `UPDATE:` to find the spots that change most often.
 
+After any change to `assets/style.css` or `assets/script.js`, raise the `?v=` number on both links in
+`index.html`. Browsers keep the old files otherwise, and new markup with an old stylesheet looks broken.
+
 - **New paper**: copy one `<li class="pub">` block in the Publications section, paste it at the top of the
   list, and edit the fields. The status tag is `review`, `preprint`, or `conf`.
 - **News**: add an `<li>` at the top of the `news` list.
