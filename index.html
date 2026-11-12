@@ -793,5 +793,11 @@
 </dialog>
 
 <script src="assets/script.js?v=4" defer></script>
+<!-- Visitor statistics: GoatCounter, no cookies. Dashboard: https://3odat.goatcounter.com -->
+<script>
+  // Visits to the mirror site are recorded under their own path, so they stay separate.
+  if (location.hostname !== '3odat.github.io') window.goatcounter = { path: function (p) { return location.host + p; } };
+</script>
+<script data-goatcounter="https://3odat.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
