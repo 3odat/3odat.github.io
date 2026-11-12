@@ -182,9 +182,9 @@ cite { font-style: italic; }
   margin: 22px 0 18px;
 }
 .role { font-family: var(--sans); font-weight: 650; font-size: clamp(1.45rem, 3vw, 2.15rem); line-height: 1.1; letter-spacing: -0.022em; }
-.role-sub { display: flex; flex-wrap: wrap; gap: 6px 0; margin: 12px 0 30px; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-2); }
+.role-sub { display: flex; flex-wrap: wrap; gap: 2px 0; margin: 8px 0 30px; font-family: var(--sans); font-weight: 550; font-size: clamp(1.15rem, 2.2vw, 1.55rem); line-height: 1.2; letter-spacing: -0.015em; color: var(--accent); }
 .role-sub span { white-space: nowrap; }
-.role-sub span:not(:last-child)::after { content: '/'; margin: 0 12px; color: var(--accent); }
+.role-sub span:not(:last-child)::after { content: '·'; margin: 0 0.5em; color: var(--ink-3); }
 .lede {
   font-family: var(--serif); font-weight: 400;
   font-size: clamp(1.45rem, 2.9vw, 2.05rem); line-height: 1.22; letter-spacing: -0.012em;
@@ -531,7 +531,7 @@ cite { font-style: italic; }
   .hero { padding-top: 22px; gap: 22px; }
   .hero h1 { margin: 16px 0 14px; }
   .role-sub { margin-bottom: 24px; }
-  .role-sub span:not(:last-child)::after { margin: 0 9px; }
+
   .x-grid { grid-template-columns: minmax(0, 1fr); }
   .x-fams { border-right: 0; border-bottom: 1px solid var(--rule); }
   .x-desc { min-height: 0; }
@@ -556,6 +556,8 @@ cite { font-style: italic; }
   .pub { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .pub-meta { flex-direction: row; align-items: center; padding-top: 0; }
   .gallery { grid-template-columns: minmax(0, 1fr); max-width: 420px; }
+  .role-sub { flex-direction: column; }
+  .role-sub span:not(:last-child)::after { display: none; }
   .steps .t { font-size: 0.78rem; }
   .steps-row { flex-direction: column; align-items: stretch; gap: 10px; }
   .replay { align-self: flex-start; }
