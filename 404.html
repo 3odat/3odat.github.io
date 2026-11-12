@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Page not found · Ibrahim Odat</title>
+<script>
+  // Some apps mangle links such as /?ref=instagram into /%3Fref=instagram or /ref=instagram.
+  // Recover the source tag and send the visitor to the home page.
+  (function () {
+    var url = location.pathname + location.search;
+    try { url = decodeURIComponent(url); } catch (e) {}
+    var m = url.match(/ref=([A-Za-z0-9_-]+)/);
+    if (m) location.replace('/?ref=' + m[1]);
+  })();
+</script>
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; font: 17px/1.5 -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #0c1424; }
+  main { padding: 24px; max-width: 30rem; }
+  h1 { font: 400 2.6rem/1.1 Georgia, serif; margin: 0 0 12px; letter-spacing: -0.02em; }
+  p { margin: 0 0 20px; color: #45506a; }
+  a { display: inline-block; padding: 10px 20px; border-radius: 999px; background: #0c1424; color: #f5f7fa; text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+  @media (prefers-color-scheme: dark) { body { background: #090d16; color: #e7ebf3; } p { color: #a6b0c3; } a { background: #e7ebf3; color: #090d16; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Page not found</h1>
+  <p>This address does not exist on the site. The home page has the research, publications, and CV.</p>
+  <a href="/">Go to the home page</a>
+</main>
+</body>
+</html>
