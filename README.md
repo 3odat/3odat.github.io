@@ -50,7 +50,7 @@ https://3odat.github.io/?ref=cv
 
 Some apps break the `?` in a link. For those, use the short addresses, which redirect to the tagged link:
 `/ig` (Instagram), `/li` (LinkedIn), `/wa` (WhatsApp), `/fb` (Facebook), `/x` (X), `/sc` (Snapchat),
-`/tt` (TikTok), `/tg` (Telegram), `/yt` (YouTube), `/em` (email), `/cv` (printed on the CV). To add one,
+`/tt` (TikTok), `/tg` (Telegram), `/yt` (YouTube), `/em` (email), `/c` (printed on the CV). To add one,
 copy the `ig` folder, change the name in its `index.html`, and add it to the list in `404.html`, which
 also repairs a broken `ref=` link.
 

@@ -14,7 +14,7 @@
     var m = url.match(/ref=([A-Za-z0-9_-]+)/);
     if (m) return location.replace('/?ref=' + m[1]);
     // Short links typed with capitals or a stray character, such as /Ig or /ig.
-    var short = { ig: 'instagram', li: 'linkedin', wa: 'whatsapp', fb: 'facebook', x: 'x', sc: 'snapchat', tt: 'tiktok', tg: 'telegram', yt: 'youtube', em: 'email', cv: 'cv' };
+    var short = { ig: 'instagram', li: 'linkedin', wa: 'whatsapp', fb: 'facebook', x: 'x', sc: 'snapchat', tt: 'tiktok', tg: 'telegram', yt: 'youtube', em: 'email', c: 'cv' };
     var seg = (url.split('/')[1] || '').split('?')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
     if (short[seg]) location.replace('/?ref=' + short[seg]);
   })();
