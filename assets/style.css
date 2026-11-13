@@ -449,6 +449,9 @@ cite { font-style: italic; }
 .pub-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding-top: 5px; }
 .pub-year { font-family: var(--mono); font-size: 0.8rem; color: var(--ink-2); }
 .kind { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; border: 1px solid var(--rule-strong); color: var(--ink-2); white-space: nowrap; }
+.kind.accepted { border-color: var(--ok); color: var(--ok); background: var(--ok-soft); }
+.dot.ok { background: var(--ok); }
+.sec-note { margin-top: 14px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.03em; color: var(--ink-3); }
 .kind.review { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .pub h3 { font-family: var(--serif); font-weight: 500; font-size: 1.36rem; line-height: 1.22; letter-spacing: -0.012em; max-width: 34ch; text-wrap: balance; transition: color 0.3s; }
 .authors { margin-top: 8px; font-size: 0.93rem; color: var(--ink-2); }

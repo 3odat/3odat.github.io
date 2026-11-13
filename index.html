@@ -23,7 +23,7 @@
 
 <link rel="preload" href="assets/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="assets/style.css?v=6" />
+<link rel="stylesheet" href="assets/style.css?v=7" />
 
 <script>
   // Apply a saved theme before first paint.
@@ -116,9 +116,8 @@
     <!-- UPDATE: numbers from Google Scholar -->
     <dl class="metrics">
       <div><dt>Citations</dt><dd>52</dd></div>
-      <div><dt>Peer-reviewed papers</dt><dd>3</dd></div>
+      <div><dt>Peer-reviewed papers</dt><dd>4</dd></div>
       <div><dt>Preprint</dt><dd>1</dd></div>
-      <div><dt>Under review</dt><dd>1</dd></div>
     </dl>
     <p class="metrics-note">Google Scholar, November 2026</p>
   </div>
@@ -138,16 +137,16 @@
     <!-- UPDATE: add the newest item at the top -->
     <ul class="news">
       <li>
+        <time datetime="2026-11">Nov 2026</time>
+        <p><a href="#aeromind"><cite>AeroMind: Poisoning the Shared-Memory Control Plane of an LLM-Driven Multi-UAV System</cite></a> is accepted at ACM AsiaCCS 2027.</p>
+      </li>
+      <li>
         <time datetime="2026-10">Oct 2026</time>
         <p>New preprint: <a href="https://arxiv.org/abs/2610.33962" target="_blank" rel="noopener"><cite>Beyond Belief: Evaluating and Mitigating LLM Susceptibility to Misinformation</cite></a> is on arXiv.</p>
       </li>
       <li>
         <time datetime="2026-10">Oct 2026</time>
         <p><a href="https://doi.org/10.1109/ICMLA69890.2026.00101" target="_blank" rel="noopener"><cite>When Memory Hurts: Amplifying Mission-Channel Attacks in LLM-Driven UAV Agents</cite></a> is published in the proceedings of ICMLA 2026.</p>
-      </li>
-      <li>
-        <time datetime="2026">2026</time>
-        <p><cite>AeroMind</cite> is under review at ACM AsiaCCS 2027. The <a href="https://github.com/OdatSec/AeroMind" target="_blank" rel="noopener">artifact</a> is public.</p>
       </li>
       <li>
         <time datetime="2026">2026</time>
@@ -205,13 +204,14 @@
 <section class="sec" id="aeromind">
   <div class="sec-label"><span class="sec-no">§ 3</span><h2>AeroMind</h2></div>
   <div class="sec-body">
-    <p class="status"><span class="dot"></span>Under review · ACM AsiaCCS 2027</p>
-    <h3 class="feature-title">Poisoning the control plane of LLM-driven UAV agents</h3>
+    <p class="status"><span class="dot ok"></span>Accepted · ACM AsiaCCS 2027</p>
+    <h3 class="feature-title">Poisoning the shared-memory control plane of an LLM-driven multi-UAV system</h3>
     <p class="sec-intro">
-      In a Supervisor–Scout UAV stack, shared long-term memory is an unguarded control plane. An attacker who
-      can write a few records to it does not need to touch the autopilot, the flight interface, or the model
-      weights.
+      When an LLM-driven UAV fleet coordinates through shared memory, that memory is the control plane. An
+      attacker who gets a few false records into it does not need to touch the autopilot, the flight
+      interface, or the model weights, and UAVs that never sensed the data act on it.
     </p>
+    <p class="sec-note">The figures below walk through the open-source AeroMind artifact.</p>
 
     <figure class="fig1 landed" id="fig1" data-scn="poisoned" data-step="4">
       <div class="fig-bar">
@@ -541,23 +541,23 @@
     <ol class="pubs">
 
       <li class="pub" id="pub-aeromind">
-        <div class="pub-meta"><span class="pub-year">2026</span><span class="kind review">Under review</span></div>
+        <div class="pub-meta"><span class="pub-year">2027</span><span class="kind accepted">Accepted</span></div>
         <div class="pub-body">
-          <h3>AeroMind: Poisoning the Control Plane of LLM-Driven UAV Agents</h3>
-          <p class="authors"><b>I. Odat</b>, A. Liu, Y. Li</p>
-          <p class="venue">Under review at ACM AsiaCCS 2027</p>
-          <p class="tldr">Three poisoned memory records redirect a Supervisor–Scout UAV fleet across seven planner backends. A retrieval-boundary defense brings hijack from 100% to 0% on validated backends.</p>
+          <h3>AeroMind: Poisoning the Shared-Memory Control Plane of an LLM-Driven Multi-UAV System</h3>
+          <p class="authors"><b>I. Odat</b>, A. Liu, Y. Qiang, Y. Li</p>
+          <p class="venue">22nd ACM Asia Conference on Computer and Communications Security (ASIA CCS 2027), to appear</p>
+          <p class="tldr">A compromised perception or telemetry feed on one UAV writes false records into shared memory through the fleet's trusted ingest path, and UAVs that never sensed the data act on it. Evaluated across six LLM backends and fleets of up to 32 UAVs, and reproduced on a PX4 software-in-the-loop stack.</p>
           <div class="pub-links">
             <a href="https://github.com/OdatSec/AeroMind" target="_blank" rel="noopener">Code</a>
             <a href="#aeromind">Overview</a>
             <button type="button" class="bib-btn" aria-expanded="false">BibTeX</button>
           </div>
-          <pre class="bib" hidden>@unpublished{odat2026aeromind,
-  title  = {AeroMind: Poisoning the Control Plane of LLM-Driven UAV Agents},
-  author = {Odat, Ibrahim and Liu, Anyi and Li, Yingjiu},
-  year   = {2026},
-  note   = {Under review at ACM AsiaCCS 2027},
-  url    = {https://github.com/OdatSec/AeroMind}
+          <pre class="bib" hidden>@inproceedings{odat2027aeromind,
+  title     = {AeroMind: Poisoning the Shared-Memory Control Plane of an LLM-Driven Multi-UAV System},
+  author    = {Odat, Ibrahim and Liu, Anyi and Qiang, Yao and Li, Yingjiu},
+  booktitle = {Proceedings of the 22nd ACM Asia Conference on Computer and Communications Security (ASIA CCS)},
+  year      = {2027},
+  note      = {To appear}
 }</pre>
         </div>
       </li>
@@ -754,7 +754,7 @@
     </div>
 
     <p class="feature-foot">
-      <a class="btn" href="assets/Ibrahim_Odat_CV.pdf?v=3" target="_blank" rel="noopener">Download CV (PDF)<svg class="i"><use href="#i-ne"/></svg></a>
+      <a class="btn" href="assets/Ibrahim_Odat_CV.pdf?v=4" target="_blank" rel="noopener">Download CV (PDF)<svg class="i"><use href="#i-ne"/></svg></a>
       <a class="btn ghost" href="cv.html">Read it online</a>
       <span class="aside">Methods and tools: adversarial ML, RAG and memory poisoning, QLoRA fine-tuning, PX4, MAVLink, MAVSDK, ROS 2, Gazebo, LangGraph, Ollama, Python, C/C++.</span>
     </p>

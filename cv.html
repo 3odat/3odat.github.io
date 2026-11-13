@@ -49,7 +49,7 @@ li b, p b { color: var(--ink); font-weight: 600; }
 </head>
 <body>
 <a class="print back" href="./">Back to site</a>
-<a class="print" href="assets/Ibrahim_Odat_CV.pdf?v=3">Download PDF</a>
+<a class="print" href="assets/Ibrahim_Odat_CV.pdf?v=4">Download PDF</a>
 
 <header>
   <h1>Ibrahim Odat</h1>
@@ -67,10 +67,9 @@ li b, p b { color: var(--ink); font-weight: 600; }
   (GPA 4.0/4.0) from Oakland University and is pursuing a Ph.D. in Computer Science &amp; Informatics under
   Dr. Anyi Liu, with research addressing emerging vulnerabilities in AI-driven autonomous systems with
   implications for national defense, border surveillance, and critical infrastructure protection. Author of
-  three peer-reviewed IEEE and IEEE/ACM publications and one preprint, cited 52 times (Google Scholar,
-  November 2026). Current doctoral research identifies memory as a control-plane attack surface in LLM-based
-  multi-agent systems, with a defense pipeline that reduces measured attack success from 100% to 0% in
-  controlled evaluation.
+  four peer-reviewed ACM and IEEE publications and one preprint, cited 52 times (Google Scholar, November
+  2026). Current doctoral research identifies shared memory as a control-plane attack surface in LLM-driven
+  multi-UAV systems, with first-author work accepted at ACM ASIA CCS 2027.
 </p>
 
 <h2>Education</h2>
@@ -90,6 +89,15 @@ li b, p b { color: var(--ink); font-weight: 600; }
 
 <h2>Publications</h2>
 <p class="note">Total citations: 52 (Google Scholar, November 2026)</p>
+<div class="item">
+  <div class="row"><b>AeroMind: Poisoning the Shared-Memory Control Plane of an LLM-Driven Multi-UAV System</b><span>2027</span></div>
+  <p class="sub">22nd ACM Asia Conference on Computer and Communications Security (ASIA CCS 2027), accepted, to appear</p>
+  <ul>
+    <li>Authors: <b>Odat, I.</b>, Liu, A., Qiang, Y., &amp; Li, Y. (First Author)</li>
+    <li>Identified control-plane poisoning in LLM-driven multi-UAV systems that coordinate through shared memory: a single compromised perception or telemetry feed writes false records through the fleet's trusted ingest path, and UAVs that never sensed the data act on it</li>
+    <li>Designed and built AeroMind, an end-to-end testbed combining a coordination simulator with a PX4, Gazebo, and ROS 2 software-in-the-loop stack; evaluated the attack across six LLM backends and fleets of up to 32 UAVs</li>
+  </ul>
+</div>
 <div class="item">
   <div class="row"><b>When Memory Hurts: Amplifying Mission-Channel Attacks in LLM-Driven UAV Agents</b><span>2026</span></div>
   <p class="sub">25th International Conference on Machine Learning and Applications (ICMLA 2026), pp. 693–700</p>
@@ -117,17 +125,7 @@ li b, p b { color: var(--ink); font-weight: 600; }
   </ul>
 </div>
 
-<h2>Preprints &amp; Manuscripts Under Review</h2>
-<div class="item">
-  <div class="row"><b>AeroMind: Poisoning the Control Plane of LLM-Driven UAV Agents</b><span>2026</span></div>
-  <p class="sub">Under review at ACM AsiaCCS 2027</p>
-  <ul>
-    <li>Authors: <b>Odat, I.</b>, Liu, A., &amp; Li, Y. (First Author)</li>
-    <li>Evaluated a multi-agent UAV system across 15 attack scenarios and seven planner backends, demonstrating that three poisoned memory records can redirect coordinated mission behavior and spread between agents through a shared-memory architecture</li>
-    <li>Developed a three-layer defense pipeline (provenance, trust reranking, diversity cap) reducing measured attack success from 100% to 0% in controlled evaluation</li>
-    <li>Proposed and formalized the first documented threat model for memory-poisoning attacks in LLM-powered multi-agent UAV systems</li>
-  </ul>
-</div>
+<h2>Preprints</h2>
 <div class="item">
   <div class="row"><b>Beyond Belief: Evaluating and Mitigating LLM Susceptibility to Misinformation</b><span>2026</span></div>
   <p class="sub">arXiv preprint arXiv:2610.33962</p>
