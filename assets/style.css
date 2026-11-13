@@ -202,7 +202,7 @@ cite { font-style: italic; }
   display: grid; grid-template-columns: repeat(4, auto); justify-content: start; gap: 0 clamp(20px, 3.4vw, 44px);
   margin-top: clamp(36px, 5vw, 56px); padding-top: 20px; border-top: 1px solid var(--rule);
 }
-.metrics > div { display: flex; flex-direction: column-reverse; }
+.metrics > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
 .metrics dd { font-family: var(--serif); font-size: 2.3rem; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: lining-nums; }
 .metrics dt { font-size: 0.78rem; color: var(--ink-2); margin-top: 6px; }
 .metrics-note { margin-top: 14px; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.04em; color: var(--ink-3); }
@@ -457,6 +457,7 @@ cite { font-style: italic; }
 .authors { margin-top: 8px; font-size: 0.93rem; color: var(--ink-2); }
 .authors b { color: var(--ink); font-weight: 600; }
 .venue { font-family: var(--serif); font-style: italic; font-size: 1.02rem; color: var(--ink-2); margin-top: 2px; }
+.pub-note { margin-top: 6px; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.02em; color: var(--ok); }
 .tldr { margin-top: 10px; font-size: 0.93rem; color: var(--ink-2); max-width: 64ch; }
 .pub-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; }
 .pub-links a, .pub-links button {
