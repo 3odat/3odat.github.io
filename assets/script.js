@@ -215,6 +215,22 @@
     if (still) still1(); else { draw(); run(); }
   })();
 
+  // ---- Reel: play while it is on screen, pause when it is not (stays still for reduced motion)
+  (() => {
+    const v = $('#reel');
+    if (!v) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    let userPaused = false;
+    v.addEventListener('pause', () => { if (v.dataset.auto !== '1') userPaused = true; });
+    new IntersectionObserver((en) => {
+      const on = en[0].isIntersecting;
+      v.dataset.auto = '1';
+      if (on && !userPaused) v.play().catch(() => {});
+      else if (!on) v.pause();
+      setTimeout(() => { v.dataset.auto = '0'; }, 50);
+    }, { threshold: 0.5 }).observe(v);
+  })();
+
   // ---- Nav: border on scroll, mobile menu, active section
   const nav = $('#nav');
   const onScroll = () => nav.classList.toggle('scrolled', scrollY > 8);

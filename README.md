@@ -45,6 +45,11 @@ of `assets/style.css`: `volt` (default), `ultra`, and `sonar`. Open the site wit
 switch dark or light. The hero animation is a small canvas simulation in `assets/script.js` that follows the
 cursor on desktop and reacts to taps on phones.
 
+## Video
+
+The reel under the hero is `assets/video/aeromind-reel.mp4`. It is rendered from `tools/reel/` (see the README
+there), or replace the file with real footage, keeping the name and the poster image.
+
 ## Tracking where visitors come from
 
 Share a tagged link in each place and GoatCounter groups the visits by source:
