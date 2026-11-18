@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-pal="gold">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>When Memory Hurts · Ibrahim Odat</title>
+<meta name="description" content="When Memory Hurts: amplifying mission-channel attacks in LLM-driven UAV agents. IEEE ICMLA 2026." />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#0a0a0b" />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="preload" href="../assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="../assets/style.css?v=14" />
+<link rel="stylesheet" href="../assets/pro.css?v=1" />
+<script>
+  try {
+    var d = document.documentElement;
+    d.dataset.theme = localStorage.getItem('theme2') || 'dark';
+    var p = localStorage.getItem('pal');
+    d.dataset.pal = (p === 'gold' || p === 'navy' || p === 'signal') ? p : 'gold';
+  } catch (e) {}
+</script>
+</head>
+<body>
+<!-- Icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-ne" viewBox="0 0 16 16"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-right" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 16 16"><path d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-name" href="./#top">Ibrahim Odat</a>
+    <nav aria-label="Sections">
+      <ul id="nav-links">
+        <li><a href="./#research">Research</a></li>
+        <li><a href="./#publications">Publications</a></li>
+        <li><a href="./#news">News</a></li>
+        <li><a href="./#experience">Experience</a></li>
+        <li><a href="./#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-tools">
+      <a class="nav-cv" href="../cv.html">CV</a>
+      <button id="theme-toggle" type="button" aria-label="Switch colour theme">
+        <svg class="i sun"><use href="#i-sun"/></svg>
+        <svg class="i moon"><use href="#i-moon"/></svg>
+      </button>
+      <button id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="p-page">
+
+<div class="wrap">
+  <a class="p-crumb" href="./#research">← Ibrahim Odat · Research</a>
+  <header class="p-page-head">
+    <p class="p-kicker">IEEE ICMLA 2026 · pp. 693–700</p>
+    <h1>When Memory Hurts: Amplifying Mission-Channel Attacks in LLM-Driven UAV Agents</h1>
+    <p class="authors"><b>Ibrahim Odat</b>, Hamza Tawayha, Anyi Liu (Oakland University)</p>
+    <p class="p-bio">
+      An LLM-driven UAV agent plans from what it sees: perception detections, telemetry, tool returns, and its own
+      short-term memory. We corrupt one of these once, in a form the agent accepts as valid, and measure what bounded
+      memory does to the damage across 1,920 runs, 12 planners, and ten seeds. Memory turns out to be a
+      channel-specific amplifier, so a defense has to match the pathway the corruption came through.
+    </p>
+    <div class="p-actions">
+      <a class="p-btn primary" href="https://doi.org/10.1109/ICMLA69890.2026.00101" target="_blank" rel="noopener">Paper (DOI) <svg class="i"><use href="#i-ne"/></svg></a>
+      <a class="p-btn" href="https://ieeexplore.ieee.org/document/11761085" target="_blank" rel="noopener">IEEE Xplore <svg class="i"><use href="#i-ne"/></svg></a>
+      <div class="pub-body" style="display:contents"><button type="button" class="p-btn bib-btn" aria-expanded="false">BibTeX</button><pre class="bib" hidden>@inproceedings{odat2026memory,
+  title     = {When Memory Hurts: Amplifying Mission-Channel Attacks in LLM-Driven UAV Agents},
+  author    = {Odat, Ibrahim and Tawayha, Hamza and Liu, Anyi},
+  booktitle = {2026 25th International Conference on Machine Learning and Applications (ICMLA)},
+  pages     = {693--700},
+  year      = {2026},
+  doi       = {10.1109/ICMLA69890.2026.00101}
+}</pre></div>
+    </div>
+  </header>
+</div>
+
+<section class="wrap p-sec">
+  <div class="p-sec-head"><h2>Results</h2></div>
+  <figure class="fig4 in" id="fig4">
+      <div class="fig-bar">
+        <span class="fig-tag">Fig. 4 · Mission failure rate</span>
+        <ul class="legend">
+          <li><i class="mk off"></i>Without memory</li>
+          <li><i class="mk on"></i>With bounded memory</li>
+        </ul>
+      </div>
+      <div class="db" role="img" aria-label="Dumbbell chart of mission failure rate without and with bounded memory. Clean runs 3.1 to 7.1 percent. All attacks 31.5 to 53.3 percent. False perception 19.2 to 54.2 percent.">
+        <div class="db-row" data-a="3.1" data-b="7.1" data-name="Clean runs" style="--a:3.875;--b:8.875" tabindex="0">
+          <span class="db-l">Clean runs<small>no attack</small></span>
+          <span class="db-t"><i class="bar"></i><i class="p off"></i><i class="p on"></i><b class="va">3.1%</b><b class="vb">7.1%</b></span>
+        </div>
+        <div class="db-row" data-a="31.5" data-b="53.3" data-name="All attacks" style="--a:39.375;--b:66.625" tabindex="0">
+          <span class="db-l">All attacks<small>four pathways pooled</small></span>
+          <span class="db-t"><i class="bar"></i><i class="p off"></i><i class="p on"></i><b class="va">31.5%</b><b class="vb">53.3%</b></span>
+        </div>
+        <div class="db-row" data-a="19.2" data-b="54.2" data-name="False perception (S1)" style="--a:24.000;--b:67.750" tabindex="0">
+          <span class="db-l">False perception<small>pathway S1</small></span>
+          <span class="db-t"><i class="bar"></i><i class="p off"></i><i class="p on"></i><b class="va">19.2%</b><b class="vb">54.2%</b></span>
+        </div>
+        <div class="db-axis" aria-hidden="true">
+          <span class="db-l"></span>
+          <span class="db-t"><i style="left:0%">0</i><i style="left:25%">20</i><i style="left:50%">40</i><i style="left:75%">60</i><i style="left:100%">80%</i></span>
+        </div>
+        <div class="db-tip" id="db-tip" hidden></div>
+      </div>
+      <div class="sr-only"><table>
+        <caption>Mission failure rate without and with bounded short-term memory</caption>
+        <thead><tr><th>Condition</th><th>Without memory</th><th>With bounded memory</th></tr></thead>
+        <tbody>
+          <tr><th>Clean runs</th><td>3.1%</td><td>7.1%</td></tr>
+          <tr><th>All attacks</th><td>31.5%</td><td>53.3%</td></tr>
+          <tr><th>False perception (S1)</th><td>19.2%</td><td>54.2%</td></tr>
+        </tbody>
+      </table></div>
+      <figcaption>Across 1,920 runs. Memory raises failure under attack far more than it costs on clean runs.</figcaption>
+    </figure>
+
+    <ol class="paths">
+      <li>
+        <span class="pid">S1</span>
+        <h4>False perception</h4>
+        <p class="pnum">2.83×</p>
+        <p>The largest amplification. Failure rises from 19.2% to 54.2% once the agent remembers what it saw.</p>
+      </li>
+      <li>
+        <span class="pid">S2</span>
+        <h4>Forged tool return</h4>
+        <p class="pnum">0.92</p>
+        <p>False-belief persistence after injection. Failure barely moves, so scoring outcomes alone misses the corruption.</p>
+      </li>
+      <li>
+        <span class="pid">S3</span>
+        <h4>Fabricated safety constraint</h4>
+        <p class="pnum">70.0%</p>
+        <p>Mission failure with memory, the highest of the four pathways.</p>
+      </li>
+      <li>
+        <span class="pid">S4</span>
+        <h4>Direct memory poisoning</h4>
+        <p class="pnum">0</p>
+        <p>Belief persistence once a write-time memory monitor is added. The same monitor does not stop S1.</p>
+      </li>
+    </ol>
+
+    
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <span>© <span id="yr">2026</span> Ibrahim Odat</span>
+    <span>Last updated November 2026</span>
+  </div>
+</footer>
+
+<script src="../assets/script.js?v=7" defer></script>
+</body>
+</html>
