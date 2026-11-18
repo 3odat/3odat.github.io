@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark" data-pal="volt">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,8 +8,7 @@
 <meta name="author" content="Ibrahim Odat" />
 <meta name="keywords" content="Ibrahim Odat, AI security, LLM security, UAV security, memory poisoning, LLM agents, AeroMind, Net-GPT, Oakland University" />
 <link rel="canonical" href="https://3odat.github.io/" />
-<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#090d16" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#06080b" />
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
 <meta property="og:type" content="profile" />
@@ -23,11 +22,15 @@
 
 <link rel="preload" href="assets/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="assets/style.css?v=8" />
+<link rel="stylesheet" href="assets/style.css?v=10" />
 
 <script>
-  // Apply a saved theme before first paint.
-  try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  // Apply the saved theme and palette before first paint. Dark and volt are the defaults.
+  try {
+    var d = document.documentElement;
+    d.dataset.theme = localStorage.getItem('theme2') || 'dark';
+    d.dataset.pal = localStorage.getItem('pal') || 'volt';
+  } catch (e) {}
 </script>
 
 <script type="application/ld+json">
@@ -89,10 +92,15 @@
 <main id="main">
 
 <!-- ================= HERO ================= -->
+<div class="hero-wrap">
+<canvas id="hero-canvas" aria-hidden="true"></canvas>
 <section class="hero" id="top">
   <div class="hero-copy">
-    <p class="eyebrow"><span class="dot"></span>PhD Candidate · Oakland University</p>
-    <h1>Ibrahim Odat</h1>
+    <div class="pills">
+      <a class="pill" href="#aeromind"><span class="pulse"></span><b>Accepted</b> ACM ASIA CCS 2027<span class="more"><i>·</i>Direct accept 7.6%</span></a>
+      <span class="tag">PhD Candidate · Oakland University</span>
+    </div>
+    <h1>Ibrahim <span class="g">Odat</span></h1>
     <p class="role">AI Security Researcher</p>
     <p class="role-sub"><span>Autonomous Systems</span><span>Offensive Security</span></p>
     <p class="lede">
@@ -129,7 +137,17 @@
       <img src="assets/img/portrait.jpg" width="640" height="800" alt="Portrait of Ibrahim Odat" fetchpriority="high" />
     </picture>
   </figure>
+
+  <p class="hud" id="hud" data-mode="patrol" aria-hidden="true"><span class="hud-dot"></span><span id="hud-text">Live simulation · move your cursor to inject a false waypoint</span></p>
 </section>
+</div>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>LLM security</span><span>Memory poisoning</span><span>UAV security</span><span>Adversarial ML</span><span>Autonomous systems</span><span>Offensive security</span><span>PX4 · MAVLink</span><span>Multi-agent systems</span><span>Red teaming</span>
+    <span>LLM security</span><span>Memory poisoning</span><span>UAV security</span><span>Adversarial ML</span><span>Autonomous systems</span><span>Offensive security</span><span>PX4 · MAVLink</span><span>Multi-agent systems</span><span>Red teaming</span>
+  </div>
+</div>
 
 <!-- ================= NEWS ================= -->
 <section class="sec" id="news">
@@ -756,7 +774,7 @@
     </div>
 
     <p class="feature-foot">
-      <a class="btn" href="assets/Ibrahim_Odat_CV.pdf?v=5" target="_blank" rel="noopener">Download CV (PDF)<svg class="i"><use href="#i-ne"/></svg></a>
+      <a class="btn" href="assets/Ibrahim_Odat_CV.pdf?v=6" target="_blank" rel="noopener">Download CV (PDF)<svg class="i"><use href="#i-ne"/></svg></a>
       <a class="btn ghost" href="cv.html">Read it online</a>
       <span class="aside">Methods and tools: adversarial ML, RAG and memory poisoning, QLoRA fine-tuning, PX4, MAVLink, MAVSDK, ROS 2, Gazebo, LangGraph, Ollama, Python, C/C++.</span>
     </p>
@@ -796,7 +814,7 @@
   <img id="lb-img" alt="" />
 </dialog>
 
-<script src="assets/script.js?v=4" defer></script>
+<script src="assets/script.js?v=5" defer></script>
 <!-- Visitor statistics: GoatCounter, no cookies. Dashboard: https://3odat.goatcounter.com -->
 <script>
   // Visits to the mirror site are recorded under their own path, so they stay separate.

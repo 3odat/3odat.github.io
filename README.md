@@ -38,6 +38,13 @@ After any change to `assets/style.css` or `assets/script.js`, raise the `?v=` nu
 - **Figures**: Fig. 1 text lives at the top of the Fig. 1 block in `assets/script.js`. The Fig. 2 scenarios
   are `data-*` attributes on the buttons in `index.html`. Fig. 3 and Fig. 4 are plain markup.
 
+## Look
+
+Dark by default, with a light mode behind the sun and moon button. Three palettes are defined as tokens at the top
+of `assets/style.css`: `volt` (default), `ultra`, and `sonar`. Open the site with `?design` to try them and
+switch dark or light. The hero animation is a small canvas simulation in `assets/script.js` that follows the
+cursor on desktop and reacts to taps on phones.
+
 ## Tracking where visitors come from
 
 Share a tagged link in each place and GoatCounter groups the visits by source:

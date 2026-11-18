@@ -9,15 +9,211 @@
   const yr = $('#yr');
   if (yr) yr.textContent = new Date().getFullYear();
 
-  // ---- Theme toggle (follows the system until the visitor chooses)
+  // ---- Theme toggle and palette (dark and volt are the defaults)
+  const PALS = ['volt', 'ultra', 'sonar'];
+  const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
   const themeBtn = $('#theme-toggle');
-  const isDark = () =>
-    root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
   themeBtn?.addEventListener('click', () => {
-    const next = isDark() ? 'light' : 'dark';
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
     root.dataset.theme = next;
-    try { localStorage.setItem('theme', next); } catch (e) {}
+    save('theme2', next);
   });
+
+  // ---- Design preview: open the site with ?design to try palettes and modes
+  (() => {
+    const q = new URLSearchParams(location.search);
+    const p = q.get('p');
+    if (PALS.includes(p)) { root.dataset.pal = p; save('pal', p); }
+    if (!q.has('design')) return;
+    const bar = document.createElement('div');
+    bar.className = 'picker';
+    const labels = { volt: 'Volt', ultra: 'Ultraviolet', sonar: 'Sonar' };
+    const mk = (text, kind, value) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = text; b.dataset.kind = kind; b.dataset.value = value;
+      return b;
+    };
+    PALS.forEach((v) => bar.append(mk(labels[v], 'pal', v)));
+    bar.append(document.createElement('hr'));
+    ['dark', 'light'].forEach((v) => bar.append(mk(v === 'dark' ? 'Dark' : 'Light', 'theme', v)));
+    const sync = () => $$('button', bar).forEach((b) => {
+      const cur = b.dataset.kind === 'pal' ? root.dataset.pal : root.dataset.theme;
+      b.setAttribute('aria-pressed', String(cur === b.dataset.value));
+    });
+    bar.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      if (b.dataset.kind === 'pal') { root.dataset.pal = b.dataset.value; save('pal', b.dataset.value); }
+      else { root.dataset.theme = b.dataset.value; save('theme2', b.dataset.value); }
+      sync();
+    });
+    document.body.append(bar);
+    sync();
+  })();
+
+  // ---- Hero: live mission simulation (scouts patrol, a false waypoint arrives, the defense catches it)
+  (() => {
+    const cv = $('#hero-canvas');
+    if (!cv || !cv.getContext) return;
+    const wrap = cv.parentElement;
+    const ctx = cv.getContext('2d');
+    const hud = $('#hud');
+    const hudText = $('#hud-text');
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = matchMedia('(pointer: coarse)').matches;
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    const TAU = Math.PI * 2;
+    const col = {};
+    const LEN = { patrol: 6.5, attack: 4.4, defended: 2.4 };
+    const MSG = {
+      patrol: () => `Live simulation · ${coarse ? 'tap' : 'move your cursor'} to inject a false waypoint`,
+      attack: () => 'Attack · false waypoint written to shared memory, scouts divert',
+      defended: () => 'Defended · unsigned record demoted, scouts return to plan',
+    };
+    let W = 0, H = 0, raf = 0, last = 0, clock = 0;
+    let visible = true, mode = 'patrol', modeT = 0, poison = null, manual = false;
+    let drones = [], wps = [];
+
+    const readColors = () => {
+      const s = getComputedStyle(root);
+      const g = (n) => s.getPropertyValue(n).trim();
+      Object.assign(col, { accent: g('--accent'), bad: g('--bad'), ok: g('--ok'), grid: g('--rule-strong'), dim: g('--ink-3') });
+    };
+    const setMode = (m) => {
+      mode = m; modeT = 0;
+      if (m === 'patrol') { poison = null; manual = false; }
+      if (hud) hud.dataset.mode = m;
+      if (hudText) hudText.textContent = MSG[m]();
+    };
+    const layout = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const r = wrap.getBoundingClientRect();
+      W = Math.max(1, r.width); H = Math.max(1, r.height);
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = W < 700 ? 4 : 6;
+      wps = Array.from({ length: n }, () => ({ x: rnd(0.08, 0.92) * W, y: rnd(0.14, 0.82) * H }));
+      const count = W < 700 ? 3 : 5;
+      while (drones.length < count) drones.push({ x: rnd(0, W), y: rnd(0, H), vx: 0, vy: 0, goal: drones.length % n, trail: [] });
+      drones.length = count;
+      drones.forEach((d) => { d.goal %= n; });
+    };
+    const step = (dt) => {
+      clock += dt; modeT += dt;
+      if (!manual && modeT > LEN[mode]) {
+        if (mode === 'patrol') { poison = { x: rnd(0.5, 0.92) * W, y: rnd(0.2, 0.8) * H }; setMode('attack'); }
+        else if (mode === 'attack') setMode('defended');
+        else setMode('patrol');
+      }
+      const attacking = mode === 'attack' && poison;
+      drones.forEach((d, i) => {
+        let tx, ty;
+        if (attacking) { const a = i * 2.4; tx = poison.x + Math.cos(a) * 18; ty = poison.y + Math.sin(a) * 18; }
+        else { tx = wps[d.goal].x; ty = wps[d.goal].y; }
+        const dx = tx - d.x, dy = ty - d.y, dist = Math.hypot(dx, dy) || 1;
+        const want = Math.min(attacking ? 150 : 78, dist * 2.2);
+        const k = Math.min(1, dt * 2.4);
+        d.vx += ((dx / dist) * want - d.vx) * k;
+        d.vy += ((dy / dist) * want - d.vy) * k;
+        d.x += d.vx * dt; d.y += d.vy * dt;
+        if (!attacking && dist < 16) d.goal = (d.goal + 1 + Math.floor(Math.random() * (wps.length - 1))) % wps.length;
+        d.trail.push(d.x, d.y);
+        if (d.trail.length > 96) d.trail.splice(0, 2);
+      });
+    };
+    const cross = (x, y, r) => { ctx.moveTo(x - r, y - r); ctx.lineTo(x + r, y + r); ctx.moveTo(x + r, y - r); ctx.lineTo(x - r, y + r); };
+    const draw = () => {
+      ctx.clearRect(0, 0, W, H);
+      const g = 56, off = (clock * 6) % g;
+      ctx.lineWidth = 1; ctx.strokeStyle = col.grid; ctx.globalAlpha = 0.2; ctx.beginPath();
+      for (let x = -off; x < W; x += g) { ctx.moveTo(x, 0); ctx.lineTo(x, H); }
+      for (let y = -off; y < H; y += g) { ctx.moveTo(0, y); ctx.lineTo(W, y); }
+      ctx.stroke();
+
+      ctx.globalAlpha = 0.6; ctx.strokeStyle = col.dim; ctx.lineWidth = 1.2;
+      wps.forEach((w) => {
+        ctx.beginPath(); ctx.moveTo(w.x - 7, w.y); ctx.lineTo(w.x + 7, w.y); ctx.moveTo(w.x, w.y - 7); ctx.lineTo(w.x, w.y + 7); ctx.stroke();
+        ctx.beginPath(); ctx.arc(w.x, w.y, 12, 0, TAU); ctx.stroke();
+      });
+
+      if (poison) {
+        const done = mode === 'defended';
+        const c = done ? col.ok : col.bad;
+        const pulse = (clock * 1.5) % 1;
+        ctx.strokeStyle = c; ctx.fillStyle = c; ctx.lineWidth = 1.8;
+        ctx.globalAlpha = (1 - pulse) * 0.9; ctx.beginPath(); ctx.arc(poison.x, poison.y, 14 + pulse * 40, 0, TAU); ctx.stroke();
+        ctx.globalAlpha = 1;
+        if (done) ctx.setLineDash([4, 4]);
+        ctx.beginPath(); ctx.arc(poison.x, poison.y, 15, 0, TAU); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.beginPath(); cross(poison.x, poison.y, 6); ctx.stroke();
+        ctx.font = "600 11px 'JetBrains Mono', ui-monospace, monospace"; ctx.textAlign = 'center';
+        ctx.fillText(done ? 'DEMOTED' : `INJECTED (${Math.round((poison.x / W) * 200)}, ${Math.round((poison.y / H) * 160)})`, poison.x, poison.y - 26);
+      }
+
+      const tc = mode === 'attack' ? col.bad : col.accent;
+      ctx.lineCap = 'round';
+      drones.forEach((d) => {
+        const t = d.trail, n = t.length / 2;
+        ctx.strokeStyle = tc; ctx.lineWidth = 2.6;
+        for (let i = 1; i < n; i++) {
+          ctx.globalAlpha = (i / n) * 0.9;
+          ctx.beginPath(); ctx.moveTo(t[i * 2 - 2], t[i * 2 - 1]); ctx.lineTo(t[i * 2], t[i * 2 + 1]); ctx.stroke();
+        }
+        ctx.globalAlpha = 1; ctx.shadowColor = tc; ctx.shadowBlur = 18; ctx.lineWidth = 1.7;
+        ctx.beginPath(); cross(d.x, d.y, 9); ctx.stroke();
+        [[-9, -9], [9, -9], [-9, 9], [9, 9]].forEach(([ox, oy]) => { ctx.beginPath(); ctx.arc(d.x + ox, d.y + oy, 4, 0, TAU); ctx.stroke(); });
+        ctx.fillStyle = tc; ctx.beginPath(); ctx.arc(d.x, d.y, 3.4, 0, TAU); ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+      ctx.globalAlpha = 1;
+    };
+    const frame = (now) => {
+      raf = 0;
+      if (!visible || document.hidden) return;
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now; step(dt); draw();
+      raf = requestAnimationFrame(frame);
+    };
+    const run = () => {
+      if (still || raf || !visible || document.hidden) return;
+      last = performance.now();
+      raf = requestAnimationFrame(frame);
+    };
+    const still1 = () => {
+      // One frame for visitors who prefer reduced motion: the attack in progress.
+      poison = { x: 0.74 * W, y: 0.42 * H }; manual = true; setMode('attack'); manual = true;
+      for (let i = 0; i < 110; i++) step(0.05);
+      draw();
+    };
+    const inert = (t) => !t.closest('a, button, input, textarea, label');
+    const at = (e) => { const r = wrap.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+
+    wrap.addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'mouse' || still) return;
+      poison = at(e); manual = true;
+      if (mode !== 'attack') setMode('attack');
+      modeT = 0;
+    });
+    wrap.addEventListener('pointerleave', (e) => {
+      if (e.pointerType === 'mouse' && manual) { manual = false; setMode('defended'); }
+    });
+    wrap.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' || still || !inert(e.target)) return;
+      poison = at(e); manual = false; setMode('attack');
+    });
+    document.addEventListener('visibilitychange', run);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((en) => { visible = en[0].isIntersecting; run(); }).observe(wrap);
+    }
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(() => { layout(); still ? still1() : draw(); }).observe(wrap);
+    }
+    new MutationObserver(() => { readColors(); if (!raf) draw(); }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-pal'] });
+
+    readColors(); layout(); setMode('patrol');
+    if (still) still1(); else { draw(); run(); }
+  })();
 
   // ---- Nav: border on scroll, mobile menu, active section
   const nav = $('#nav');
