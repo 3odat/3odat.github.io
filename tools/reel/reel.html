@@ -12,7 +12,12 @@ const PORTRAIT = Q.get('v') === 'portrait';
 const W = PORTRAIT ? 1080 : 1920, H = PORTRAIT ? 1920 : 1080;
 const cv = document.getElementById('c'); cv.width = W; cv.height = H;
 const ctx = cv.getContext('2d');
-const C = { bg: '#06080b', surf: '#0c1015', ink: '#f3f6f8', ink2: '#aab4be', ink3: '#6f7b87', rule: '#2a3644', acc: '#c6ff1a', acc2: '#2ef2c9', bad: '#ff4d6a', ok: '#35e0ff' };
+const PALS = {
+  gold: { bg: '#0a0a0b', surf: '#111113', ink: '#f6f3ec', ink2: '#b8b2a4', ink3: '#7a7568', rule: '#34322b', acc: '#d6ac45', acc2: '#f4dc9b', bad: '#e2483d', ok: '#4fb596', a: '214,172,69', a2: '244,220,155', b: '226,72,61' },
+  navy: { bg: '#060a12', surf: '#0c1320', ink: '#edf2fa', ink2: '#a3b1c7', ink3: '#66758e', rule: '#263650', acc: '#4a9eff', acc2: '#a8d0ff', bad: '#ec5148', ok: '#3dbf92', a: '74,158,255', a2: '168,208,255', b: '236,81,72' },
+  signal: { bg: '#09090a', surf: '#121214', ink: '#f4f4f5', ink2: '#b4b4ba', ink3: '#77777f', rule: '#333338', acc: '#e5393f', acc2: '#ff9a94', bad: '#ff6b5e', ok: '#4fb596', a: '229,57,63', a2: '255,154,148', b: '255,107,94' },
+};
+const C = PALS[Q.get('p')] || PALS.gold;
 const DUR = 21.5;
 
 // ---------- layout
@@ -58,7 +63,7 @@ const SAFE = [{ p0: S1, c: [84, 140], p1: ALPHA }, { p0: S2, c: [176, 226], p1: 
 const OFF = [[-8, -5], [8, 5]];
 
 function drone(x, y, col, k = 1) {
-  ctx.save(); ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 3 * k; ctx.shadowColor = col; ctx.shadowBlur = 26;
+  ctx.save(); ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 3 * k; ctx.shadowColor = col; ctx.shadowBlur = 8;
   const a = 17 * k, r = 7 * k;
   ctx.beginPath(); ctx.moveTo(x - a, y - a); ctx.lineTo(x + a, y + a); ctx.moveTo(x + a, y - a); ctx.lineTo(x - a, y + a); ctx.stroke();
   [[-a, -a], [a, -a], [-a, a], [a, a]].forEach(([ox, oy]) => { ctx.beginPath(); ctx.arc(x + ox, y + oy, r, 0, 7); ctx.stroke(); });
@@ -87,7 +92,7 @@ function drawMap(t, a) {
   if (a <= 0) return;
   ctx.save(); ctx.globalAlpha = a;
   const m = L.map; const x0 = MO.x, y0 = MO.y, w = 400 * MS, h = 320 * MS;
-  ctx.fillStyle = 'rgba(12,16,21,0.85)'; rr(x0, y0, w, h, 22); ctx.fill();
+  ctx.fillStyle = C.surf; rr(x0, y0, w, h, 22); ctx.fill();
   ctx.save(); rr(x0, y0, w, h, 22); ctx.clip();
   ctx.strokeStyle = C.rule; ctx.globalAlpha = a * 0.45; ctx.lineWidth = 2; ctx.beginPath();
   for (let g = 0; g <= 400; g += 40) { ctx.moveTo(x0 + g * MS, y0); ctx.lineTo(x0 + g * MS, y0 + h); }
@@ -144,7 +149,7 @@ function row(d, i, o) {
   const m = L.mem; const y = m.y + 56 + i * m.row, h = m.row - 12;
   ctx.save(); ctx.globalAlpha = o.a;
   const bad = o.bad, col = bad ? C.bad : C.rule;
-  ctx.fillStyle = bad ? 'rgba(255,77,106,0.13)' : 'rgba(255,255,255,0.03)';
+  ctx.fillStyle = bad ? `rgba(${C.b},0.13)` : 'rgba(255,255,255,0.03)';
   if (o.demoted) ctx.fillStyle = 'rgba(255,255,255,0.0)';
   rr(m.x + (o.dx || 0), y, m.w, h, 12); ctx.fill();
   ctx.strokeStyle = col; ctx.lineWidth = 2.5; if (o.demoted) ctx.setLineDash([8, 7]); rr(m.x + (o.dx || 0), y, m.w, h, 12); ctx.stroke(); ctx.setLineDash([]);
@@ -189,7 +194,7 @@ function drawMem(t, a) {
 function tile(i, n, big, label, col, a, o = {}) {
   if (a <= 0) return; const s = L.stat; const w = s.w / n; const x = s.x + i * w;
   ctx.save(); ctx.globalAlpha = a;
-  ctx.font = F(800, 76); ctx.fillStyle = col; ctx.shadowColor = col; ctx.shadowBlur = 30; ctx.letterSpacing = '-3px'; ctx.fillText(big, x, s.y + 70);
+  ctx.font = F(800, 76); ctx.fillStyle = col; ctx.shadowColor = col; ctx.shadowBlur = 6; ctx.letterSpacing = '-3px'; ctx.fillText(big, x, s.y + 70);
   ctx.restore();
   txt(label, x, s.y + 110, { s: 21, w: 500, f: 'mono', c: C.ink2, a, ls: 0 });
 }
@@ -211,8 +216,8 @@ const win = (t, a, b, fi = 0.5, fo = 0.5) => clamp(Math.min((t - a) / fi, (b - t
 // ---------- background and chrome
 function bg(t) {
   ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
-  let g = ctx.createRadialGradient(W * 0.9, 0, 0, W * 0.9, 0, W * 0.8); g.addColorStop(0, 'rgba(198,255,26,0.18)'); g.addColorStop(1, 'rgba(198,255,26,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-  g = ctx.createRadialGradient(0, H, 0, 0, H, W * 0.7); g.addColorStop(0, 'rgba(46,242,201,0.12)'); g.addColorStop(1, 'rgba(46,242,201,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  let g = ctx.createRadialGradient(W * 0.9, 0, 0, W * 0.9, 0, W * 0.8); g.addColorStop(0, `rgba(${C.a},0.10)`); g.addColorStop(1, `rgba(${C.a},0)`); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  g = ctx.createRadialGradient(0, H, 0, 0, H, W * 0.7); g.addColorStop(0, `rgba(${C.a2},0.05)`); g.addColorStop(1, `rgba(${C.a2},0)`); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
   ctx.strokeStyle = C.rule; ctx.globalAlpha = 0.22; ctx.lineWidth = 1.5; ctx.beginPath();
   const off = (t * 14) % 72;
   for (let x = -off; x < W; x += 72) { ctx.moveTo(x, 0); ctx.lineTo(x, H); }
@@ -229,13 +234,13 @@ function render(t) {
     const y0 = PORTRAIT ? 760 : 470, size = PORTRAIT ? 120 : 132, x = L.pad;
     txt('THE FLEET TRUSTS ITS SHARED MEMORY.', x, y0 - size - 28, { s: 24, w: 600, f: 'mono', c: C.acc, a: s0 * e, ls: 3 });
     ctx.save(); ctx.globalAlpha = s0 * e; ctx.font = F(800, size); ctx.letterSpacing = (-size * 0.045) + 'px'; ctx.fillStyle = C.ink; ctx.fillText('What if', x, y0 + (1 - e) * 30); ctx.restore();
-    ctx.save(); ctx.globalAlpha = s0 * e2; ctx.font = F(800, size); ctx.letterSpacing = (-size * 0.045) + 'px'; ctx.fillStyle = gradFill(x, x + 800, C.bad, '#ff9a5a'); ctx.fillText("it's lying?", x, y0 + size * 1.05 + (1 - e2) * 30); ctx.restore();
+    ctx.save(); ctx.globalAlpha = s0 * e2; ctx.font = F(800, size); ctx.letterSpacing = (-size * 0.045) + 'px'; ctx.fillStyle = C.bad; ctx.fillText("it's lying?", x, y0 + size * 1.05 + (1 - e2) * 30); ctx.restore();
   }
   // chrome for story scenes
   const story = win(t, 2.7, 15.3, 0.5, 0.5);
   if (story > 0) {
     txt('AEROMIND · ACM ASIA CCS 2027', L.tag.x, L.tag.y, { s: 20, w: 600, f: 'mono', c: C.acc, a: story, ls: 3 });
-    ctx.save(); ctx.globalAlpha = story; ctx.fillStyle = C.acc; ctx.shadowColor = C.acc; ctx.shadowBlur = 16; ctx.beginPath(); ctx.arc(L.tag.x - 24, L.tag.y - 7, 6, 0, 7); ctx.fill(); ctx.restore();
+    ctx.save(); ctx.globalAlpha = story; ctx.fillStyle = C.acc; ctx.shadowColor = C.acc; ctx.shadowBlur = 6; ctx.beginPath(); ctx.arc(L.tag.x - 24, L.tag.y - 7, 6, 0, 7); ctx.fill(); ctx.restore();
   }
   headline(['One feed.', 'Three false records.'], 'Schema-valid records pass the trusted ingest.', win(t, 2.8, 6.0, 0.5, 0.4), C.bad);
   headline(['The whole fleet', 'follows.'], 'Scouts that never sensed the data act on it.', win(t, 6.0, 11.4, 0.5, 0.4), C.bad);
@@ -259,12 +264,12 @@ function render(t) {
   const s4 = win(t, 15.2, 18.6, 0.5, 0.5);
   if (s4 > 0) {
     const cx = PORTRAIT ? 72 : 96, cy = PORTRAIT ? 560 : 330;
-    ctx.save(); ctx.globalAlpha = s4; ctx.strokeStyle = 'rgba(198,255,26,0.6)'; ctx.fillStyle = 'rgba(198,255,26,0.1)'; ctx.lineWidth = 3; rr(cx, cy - 56, PORTRAIT ? 700 : 760, 76, 38); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = C.acc; ctx.shadowColor = C.acc; ctx.shadowBlur = 18; ctx.beginPath(); ctx.arc(cx + 40, cy - 18, 9, 0, 7); ctx.fill(); ctx.restore();
+    ctx.save(); ctx.globalAlpha = s4; ctx.strokeStyle = `rgba(${C.a},0.5)`; ctx.fillStyle = `rgba(${C.a},0.08)`; ctx.lineWidth = 3; rr(cx, cy - 56, PORTRAIT ? 700 : 760, 76, 38); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = C.acc; ctx.shadowColor = C.acc; ctx.shadowBlur = 6; ctx.beginPath(); ctx.arc(cx + 40, cy - 18, 9, 0, 7); ctx.fill(); ctx.restore();
     txt('ACCEPTED', cx + 72, cy - 8, { s: 30, w: 700, f: 'mono', c: C.acc, a: s4, ls: 3 }); txt('ACM ASIA CCS 2027', cx + 290, cy - 8, { s: 30, w: 600, f: 'mono', c: C.ink, a: s4, ls: 3 });
     const val = (7.6 * ease(seg(t, 15.5, 16.8))).toFixed(1);
     const size = PORTRAIT ? 330 : 380;
-    ctx.save(); ctx.globalAlpha = s4; ctx.font = F(800, size); ctx.letterSpacing = (-size * 0.05) + 'px'; ctx.fillStyle = gradFill(cx, cx + 800); ctx.shadowColor = C.acc; ctx.shadowBlur = 50; ctx.fillText(val + '%', cx - 6, cy + size * 0.88); ctx.restore();
+    ctx.save(); ctx.globalAlpha = s4; ctx.font = F(800, size); ctx.letterSpacing = (-size * 0.05) + 'px'; ctx.fillStyle = gradFill(cx, cx + 800); ctx.shadowColor = C.acc; ctx.shadowBlur = 12; ctx.fillText(val + '%', cx - 6, cy + size * 0.88); ctx.restore();
     txt('DIRECT ACCEPT RATE', cx, cy + size * 0.88 + 56, { s: 28, w: 700, f: 'mono', c: C.ink, a: s4 * seg(t, 16.2, 16.9), ls: 3 });
     txt('39 of 514 submissions · Cycle 1', cx, cy + size * 0.88 + 100, { s: 26, w: 500, f: 'mono', c: C.ink2, a: s4 * seg(t, 16.4, 17.1) });
     const t1 = 'AeroMind: Poisoning the Shared-Memory Control Plane', t2 = 'of an LLM-Driven Multi-UAV System';
@@ -277,13 +282,13 @@ function render(t) {
     const size = PORTRAIT ? 250 : 300, x = L.pad, y = PORTRAIT ? 700 : 420;
     const e = eo(seg(t, 18.5, 19.2)), e2 = eo(seg(t, 18.7, 19.4));
     ctx.save(); ctx.globalAlpha = s5 * e; ctx.font = F(800, size); ctx.letterSpacing = (-size * 0.058) + 'px'; ctx.fillStyle = C.ink; ctx.fillText('Ibrahim', x - 6, y + (1 - e) * 28); ctx.restore();
-    ctx.save(); ctx.globalAlpha = s5 * e2; ctx.font = F(800, size); ctx.letterSpacing = (-size * 0.058) + 'px'; ctx.fillStyle = gradFill(x, x + size * 2.2); ctx.shadowColor = C.acc; ctx.shadowBlur = 50; ctx.fillText('Odat', x - 6, y + size * 0.9 + (1 - e2) * 28); ctx.restore();
+    ctx.save(); ctx.globalAlpha = s5 * e2; ctx.font = F(800, size); ctx.letterSpacing = (-size * 0.058) + 'px'; ctx.fillStyle = gradFill(x, x + size * 2.2); ctx.shadowColor = C.acc; ctx.shadowBlur = 12; ctx.fillText('Odat', x - 6, y + size * 0.9 + (1 - e2) * 28); ctx.restore();
     const ya = y + size * 0.9 + (PORTRAIT ? 110 : 100);
     txt('AI Security Researcher', x, ya, { s: PORTRAIT ? 58 : 60, w: 700, c: C.ink, a: s5 * seg(t, 19.2, 19.8) });
     ctx.save(); ctx.globalAlpha = s5 * seg(t, 19.4, 20.0); ctx.font = F(600, PORTRAIT ? 40 : 42); ctx.fillStyle = gradFill(x, x + 700); ctx.fillText('Autonomous Systems · Offensive Security', x, ya + 62); ctx.restore();
     const ux = x, uy = ya + (PORTRAIT ? 190 : 170);
-    ctx.save(); ctx.globalAlpha = s5 * seg(t, 19.8, 20.4); ctx.fillStyle = C.acc; ctx.shadowColor = C.acc; ctx.shadowBlur = 40; rr(ux, uy - 56, 470, 84, 42); ctx.fill(); ctx.restore();
-    txt('3odat.github.io', ux + 36, uy, { s: 42, w: 800, c: '#06080b', a: s5 * seg(t, 19.8, 20.4), f: 'mono' });
+    ctx.save(); ctx.globalAlpha = s5 * seg(t, 19.8, 20.4); ctx.fillStyle = C.acc; ctx.shadowColor = C.acc; ctx.shadowBlur = 10; rr(ux, uy - 56, 470, 84, 42); ctx.fill(); ctx.restore();
+    txt('3odat.github.io', ux + 36, uy, { s: 42, w: 800, c: C.bg, a: s5 * seg(t, 19.8, 20.4), f: 'mono' });
   }
   if (t > 3 && t < 18.4) txt('3odat.github.io', L.url.x, L.url.y, { s: 20, w: 500, f: 'mono', c: C.ink3, al: L.url.al, a: 0.8 });
 }

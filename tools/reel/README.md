@@ -5,8 +5,8 @@ exact. The text and numbers are written in `reel.html` (search for `7.6`, `1.00`
 
 ```bash
 python3 -m http.server 8000 &
-node tools/reel/capture.js wide frames-wide
-node tools/reel/capture.js portrait frames-portrait
+node tools/reel/capture.js wide frames-wide gold
+node tools/reel/capture.js portrait frames-portrait gold
 
 # site version (720p)
 ffmpeg -framerate 30 -i frames-wide/f_%04d.jpg -vf scale=1280:720:flags=lanczos \

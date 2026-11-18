@@ -9,8 +9,8 @@
   const yr = $('#yr');
   if (yr) yr.textContent = new Date().getFullYear();
 
-  // ---- Theme toggle and palette (dark and volt are the defaults)
-  const PALS = ['volt', 'ultra', 'sonar'];
+  // ---- Theme toggle and palette (dark and gold are the defaults)
+  const PALS = ['gold', 'navy', 'signal'];
   const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
   const themeBtn = $('#theme-toggle');
   themeBtn?.addEventListener('click', () => {
@@ -27,7 +27,7 @@
     if (!q.has('design')) return;
     const bar = document.createElement('div');
     bar.className = 'picker';
-    const labels = { volt: 'Volt', ultra: 'Ultraviolet', sonar: 'Sonar' };
+    const labels = { gold: 'Gold', navy: 'Navy', signal: 'Signal' };
     const mk = (text, kind, value) => {
       const b = document.createElement('button');
       b.type = 'button'; b.textContent = text; b.dataset.kind = kind; b.dataset.value = value;
@@ -160,7 +160,7 @@
           ctx.globalAlpha = (i / n) * 0.9;
           ctx.beginPath(); ctx.moveTo(t[i * 2 - 2], t[i * 2 - 1]); ctx.lineTo(t[i * 2], t[i * 2 + 1]); ctx.stroke();
         }
-        ctx.globalAlpha = 1; ctx.shadowColor = tc; ctx.shadowBlur = 18; ctx.lineWidth = 1.7;
+        ctx.globalAlpha = 1; ctx.shadowColor = tc; ctx.shadowBlur = 8; ctx.lineWidth = 1.7;
         ctx.beginPath(); cross(d.x, d.y, 9); ctx.stroke();
         [[-9, -9], [9, -9], [-9, 9], [9, 9]].forEach(([ox, oy]) => { ctx.beginPath(); ctx.arc(d.x + ox, d.y + oy, 4, 0, TAU); ctx.stroke(); });
         ctx.fillStyle = tc; ctx.beginPath(); ctx.arc(d.x, d.y, 3.4, 0, TAU); ctx.fill();

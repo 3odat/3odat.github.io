@@ -41,7 +41,7 @@ After any change to `assets/style.css` or `assets/script.js`, raise the `?v=` nu
 ## Look
 
 Dark by default, with a light mode behind the sun and moon button. Three palettes are defined as tokens at the top
-of `assets/style.css`: `volt` (default), `ultra`, and `sonar`. Open the site with `?design` to try them and
+of `assets/style.css`: `gold` (default, black and gold like the university), `navy`, and `signal`. Open the site with `?design` to try them and
 switch dark or light. The hero animation is a small canvas simulation in `assets/script.js` that follows the
 cursor on desktop and reacts to taps on phones.
 

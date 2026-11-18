@@ -1,16 +1,17 @@
 // Renders the AeroMind reel frame by frame (deterministic, no dropped frames).
 // Usage, from the repo root, with a static server running (python3 -m http.server 8000):
-//   node tools/reel/capture.js wide     frames-wide
-//   node tools/reel/capture.js portrait frames-portrait
+//   node tools/reel/capture.js wide     frames-wide     gold
+//   node tools/reel/capture.js portrait frames-portrait gold
+// The last argument is the palette: gold (default), navy, or signal.
 // Then encode (see tools/reel/README.md).
 const { chromium } = require('playwright');
 const fs = require('fs');
 (async () => {
-  const [, , kind = 'wide', dir = 'frames', base = 'http://localhost:8000'] = process.argv;
+  const [, , kind = 'wide', dir = 'frames', palette = 'gold', base = 'http://localhost:8000'] = process.argv;
   const portrait = kind === 'portrait';
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: portrait ? 1080 : 1920, height: portrait ? 1920 : 1080 } });
-  await page.goto(`${base}/tools/reel/reel.html${portrait ? '?v=portrait' : ''}`, { waitUntil: 'networkidle' });
+  await page.goto(`${base}/tools/reel/reel.html?p=${palette}${portrait ? '&v=portrait' : ''}`, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => window.READY);
   fs.mkdirSync(dir, { recursive: true });
   const frames = Math.round(21.5 * 30);
