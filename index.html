@@ -22,7 +22,7 @@
 
 <link rel="preload" href="assets/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="assets/style.css?v=13" />
+<link rel="stylesheet" href="assets/style.css?v=14" />
 
 <script>
   // Apply the saved theme and palette before first paint. Dark and gold are the defaults.
@@ -168,7 +168,9 @@
 
 <!-- ================= NEWS ================= -->
 <section class="sec" id="news">
+  <div class="sec-head">
   <div class="sec-label"><span class="sec-no">§ 1</span><h2>News</h2></div>
+  </div>
   <div class="sec-body">
     <!-- UPDATE: add the newest item at the top -->
     <ul class="news">
@@ -198,12 +200,16 @@
 
 <!-- ================= RESEARCH ================= -->
 <section class="sec" id="research">
+  <div class="sec-head">
   <div class="sec-label"><span class="sec-no">§ 2</span><h2>Research</h2></div>
-  <div class="sec-body">
+    <div class="sec-aside">
     <p class="sec-intro">
       Language models now plan missions, call tools, and remember across sessions. Each of those abilities is
       also a way in. I work on three questions.
     </p>
+    </div>
+  </div>
+  <div class="sec-body">
 
     <ol class="themes">
       <li>
@@ -238,16 +244,22 @@
 
 <!-- ================= AEROMIND ================= -->
 <section class="sec" id="aeromind">
+  <div class="sec-head feature">
+    <div class="sec-main">
   <div class="sec-label"><span class="sec-no">§ 3</span><h2>AeroMind</h2></div>
-  <div class="sec-body">
     <p class="status"><span class="dot ok"></span>Accepted · ACM AsiaCCS 2027 · Direct accept, 39 of 514 (7.6%)</p>
     <h3 class="feature-title">Poisoning the shared-memory control plane of an LLM-driven multi-UAV system</h3>
+    </div>
+    <div class="sec-aside">
     <p class="sec-intro">
       When an LLM-driven UAV fleet coordinates through shared memory, that memory is the control plane. An
       attacker who gets a few false records into it does not need to touch the autopilot, the flight
       interface, or the model weights, and UAVs that never sensed the data act on it.
     </p>
     <p class="sec-note">The figures below walk through the open-source AeroMind artifact.</p>
+    </div>
+  </div>
+  <div class="sec-body">
 
     <figure class="fig1 landed" id="fig1" data-scn="poisoned" data-step="4">
       <div class="fig-bar">
@@ -482,15 +494,21 @@
 
 <!-- ================= WHEN MEMORY HURTS ================= -->
 <section class="sec" id="memory">
+  <div class="sec-head feature">
+    <div class="sec-main">
   <div class="sec-label"><span class="sec-no">§ 4</span><h2>When Memory Hurts</h2></div>
-  <div class="sec-body">
     <p class="status"><span class="dot"></span>Published · ICMLA 2026</p>
     <h3 class="feature-title">Short-term memory turns one bad input into a failed mission</h3>
+    </div>
+    <div class="sec-aside">
     <p class="sec-intro">
       An LLM-driven UAV agent plans from what it sees: perception detections, telemetry, tool returns, and its
       own short-term memory. We corrupt one of these once, in a form the agent accepts as valid, and measure
       what bounded memory does to the damage. 1,920 runs, 12 planners, ten seeds.
     </p>
+    </div>
+  </div>
+  <div class="sec-body">
 
     <figure class="fig4 in" id="fig4">
       <div class="fig-bar">
@@ -567,7 +585,9 @@
 
 <!-- ================= PUBLICATIONS ================= -->
 <section class="sec" id="publications">
+  <div class="sec-head">
   <div class="sec-label"><span class="sec-no">§ 5</span><h2>Publications</h2></div>
+  </div>
   <div class="sec-body">
 
     <!--
@@ -696,12 +716,16 @@
 
 <!-- ================= LAB ================= -->
 <section class="sec" id="lab">
+  <div class="sec-head">
   <div class="sec-label"><span class="sec-no">§ 6</span><h2>Lab</h2></div>
-  <div class="sec-body">
+    <div class="sec-aside">
     <p class="sec-intro">
       The simulation work is backed by hands-on time with PX4 flight controllers and multi-rotor airframes at
       the Oakland University Engineering Center.
     </p>
+    </div>
+  </div>
+  <div class="sec-body">
     <div class="gallery">
       <figure>
         <button type="button" class="shot" data-full="assets/img/lab-1.jpg" aria-label="Enlarge photo">
@@ -727,10 +751,14 @@
 
 <!-- ================= BACKGROUND ================= -->
 <section class="sec" id="background">
+  <div class="sec-head">
   <div class="sec-label"><span class="sec-no">§ 7</span><h2>Background</h2></div>
+  </div>
   <div class="sec-body">
 
-    <h3 class="mini-h">Education</h3>
+    <div class="bg-cols">
+      <div>
+      <h3 class="mini-h">Education</h3>
     <ul class="tl">
       <li>
         <span class="when">2025 – 2029 (expected)</span>
@@ -742,8 +770,9 @@
         <div><b>M.S., Cybersecurity</b><span>Oakland University, Rochester, MI · GPA 4.0 / 4.0</span></div>
       </li>
     </ul>
-
-    <h3 class="mini-h">Research and teaching</h3>
+      </div>
+      <div>
+      <h3 class="mini-h">Research and teaching</h3>
     <ul class="tl">
       <li>
         <span class="when">2022 – present</span>
@@ -756,8 +785,9 @@
           <p>Information Security Practices (CSI 5480), Network Security (CSI 6600), Fundamentals of Operating Systems (CSI 4500/5500), Introduction to C Programming and Unix (CSI 1420).</p></div>
       </li>
     </ul>
-
-    <h3 class="mini-h">Industry</h3>
+      </div>
+      <div>
+      <h3 class="mini-h">Industry</h3>
     <ul class="tl">
       <li>
         <span class="when">2021 – 2022</span>
@@ -770,6 +800,8 @@
           <p>Web application and API security assessments, with Python automation that halved manual testing effort.</p></div>
       </li>
     </ul>
+      </div>
+    </div>
 
     <div class="two-col facts">
       <div>
@@ -800,12 +832,16 @@
 
 <!-- ================= CONTACT ================= -->
 <section class="sec" id="contact">
+  <div class="sec-head">
   <div class="sec-label"><span class="sec-no">§ 8</span><h2>Contact</h2></div>
-  <div class="sec-body">
+    <div class="sec-aside">
     <p class="contact-lede">
       I am open to research collaborations and invited talks on LLM and UAV security.
       The fastest way to reach me is <a href="mailto:ibrahimodat@oakland.edu">ibrahimodat@oakland.edu</a>.
     </p>
+    </div>
+  </div>
+  <div class="sec-body">
     <ul class="contact-list">
       <li><span>Academic</span><a href="mailto:ibrahimodat@oakland.edu">ibrahimodat@oakland.edu</a></li>
       <li><span>Personal</span><a href="mailto:ibrahimodatt@gmail.com">ibrahimodatt@gmail.com</a></li>
